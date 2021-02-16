@@ -71,7 +71,8 @@ class NotaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $nota = Nota::findOrFail($id);
+        return view('notas.editar',compact('nota'));
     }
 
     /**
@@ -83,7 +84,17 @@ class NotaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nombre'=>'required',
+            'descripcion'=>'required'
+        ]);
+        $notaUpdate = Nota::findOrFail($id);
+        $notaUpdate->nombre = $request->nombre;
+        $notaUpdate->descripcion = $request->descripcion;
+      
+        $notaUpdate-> save();
+        
+        return back()->with('mensaje','Nota actualizada');
     }
 
     /**
@@ -94,6 +105,8 @@ class NotaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $notaAEliminar = Nota::findOrFail($id);
+        $notaAEliminar->delete();
+        return back()->with('mensaje','Nota eliminada');
     }
 }

@@ -26,7 +26,13 @@
                                 <th scope="row">{{ $item->id }}</th>
                                 <td>{{ $item->nombre }}</td>
                                 <td>{{ $item->descripcion }}</td>
-                                <td>Acción</td>
+                                <td>
+                                    <a href='/notas/{{$item->id}}/edit' class="btn btn-info btn-sm">Editar</a>
+                                    <form action="notas/{{$item->id}}" method="POST" class="d-inline">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn btn-danger btn-sm" type="submit">Eliminar</button>
+                                    </form>
                             </tr>
                             @endforeach
                         </tbody>
